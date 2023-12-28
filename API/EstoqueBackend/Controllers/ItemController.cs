@@ -24,25 +24,32 @@ namespace EstoqueBackend.Controllers
             }
         }
 
-        [HttpPut("/ComprarItem")]
-        public IActionResult ComprarItem([FromBody] CompraItemViewModel compraItem)
+        [Route("/ComprarItem")]
+        [HttpPut]
+        public IActionResult ComprarItem([FromBody] ProdutoDTO produtoDTO)
         {
             using (var contexto = new EstoqueContext())
             {
-                var produto = contexto.Produtos
-                    .SingleOrDefault(p => p.Nome == compraItem.Nome && p.Tamanho == compraItem.Tamanho);
+                // Buscar o ID do produto pelo nome e tamanho
+                var produtoId = contexto.Produtos
+                    .Where(p => p.Nome == produtoDTO.Nome && p.Tamanho == produtoDTO.Tamanho)
+                    .Select(p => p.Id)
+                    .FirstOrDefault();
 
-                if (produto != null && produto.QuantidadeRestante >= compraItem.QuantidadeComprada)
+                if (produtoId != 0)
                 {
-                    produto.QuantidadeRestante -= compraItem.QuantidadeComprada;
+                    // Produto encontrado, agora você pode usar o ID
+                    var produtoExistente = contexto.Produtos.Find(produtoId);
+                    produtoExistente.QuantidadeRestante -= produtoDTO.QuantidadeComprada;
                     contexto.SaveChanges();
-                    return Ok("Compra realizada com sucesso.");
+                    return Ok();
                 }
-
-                return BadRequest("Não foi possível realizar a compra. Verifique o nome, tamanho e a quantidade disponível.");
+                else
+                {
+                    return BadRequest("Produto não existe");
+                }
             }
         }
-
 
 
         [Route("/RemoverItem")]
