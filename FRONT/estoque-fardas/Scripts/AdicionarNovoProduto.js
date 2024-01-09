@@ -24,10 +24,12 @@ $(document).ready(function () {
         data: JSON.stringify(jsonData),
         success: function (data) {
           // Manipule a resposta da API aqui, se necessário
+          window.alert('Produto adicionado com sucesso!');
           console.log('Requisição POST bem-sucedida:', data);
         },
         error: function (error) {
           // Manipule o erro da API aqui, se necessário
+          window.alert('Erro ao adicionar produto!');
           console.error('Erro na requisição POST:', error);
         }
       });
