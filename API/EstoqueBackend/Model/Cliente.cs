@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using EstoqueBackend.Data.DTOs;
+﻿using EstoqueBackend.Data.DTOs;
+using EstoqueBackend.Model.Relacionamentos;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EstoqueBackend.Model
 {
@@ -7,17 +9,18 @@ namespace EstoqueBackend.Model
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
-        public string Aluno { get; set; }
-        [Required] 
-        public string Nome { get; set; }
+        public string NomeCliente { get; set; }
 
-        Cliente() { }
+        // Lista de itens do pedido
+        public List<ItemPedido> Itens { get; set; }
+        public Cliente() { }
 
+        // Construtor que aceita o nome do cliente como argumento
         public Cliente(ClienteDTO clienteDTO)
         {
-            Aluno = clienteDTO.Aluno;
-            Nome = clienteDTO.nome;
+            NomeCliente = clienteDTO.NomeCliente;
         }
     }
 }
