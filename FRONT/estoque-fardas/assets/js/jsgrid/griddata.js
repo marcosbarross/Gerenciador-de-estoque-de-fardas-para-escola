@@ -7,8 +7,8 @@ var db = {
             // Iterate through the data and populate the table
             $.each(data, function (index, item) {
                 var newRow = "<tr data-index='" + index + "'>" +
-                    "<td contenteditable='true'>" + item.nome + "</td>" +
-                    "<td contenteditable='true'>" + item.tamanho + "</td>" +
+                    "<td contenteditable='false'>" + item.nome + "</td>" +
+                    "<td contenteditable='false'>" + item.tamanho + "</td>" +
                     "<td contenteditable='true'>" + item.preco + "</td>" +
                     "<td contenteditable='true'>" + item.quantidadeRestante + "</td>" +
                     "<td><button class='btn btn-danger' onclick='deleteItem(" + index + ")'>Apagar</button> " +

@@ -4,7 +4,7 @@ $(document).ready(function () {
             { data: 'nome' },
             {
                 data: 'tamanho',
-                /*render: function (data, type, row) {
+                render: function (data, type, row) {
                     var tamanhoOptions = [2, 4, 6, 8, 10, 12, 14, 16];
                     var dropdown = '<select class="form-select" data-rowid="' + row.id + '">';
 
@@ -18,9 +18,8 @@ $(document).ready(function () {
 
                     dropdown += '</select>';
                     return dropdown;
-                }*/},
+                }},
             { data: 'preco' },
-            { data: 'quantidadeRestante' },
             {
                 data: 'quantidade',
                 render: function (data, type, row) {
@@ -59,22 +58,29 @@ $(document).ready(function () {
     
         // Itera sobre os dados da tabela
         data.each(function (item) {
+            var nomeCliente = $("#nomeAluno").val();
             var nome = item.nome;
             var tamanho = item.tamanho;
             var quantidadeInput = $('.input-number[data-rowid="' + nome + tamanho + '"]');
             var quantidadeValue = parseInt(quantidadeInput.val(), 10);
+
+            console.log('Nome do cliente: ' + nomeCliente);
+            console.log('Nome do item: ' + nome);
+            console.log('Tamanho do item: ' + tamanho);
+            console.log('Quantidade do item: ' + quantidadeValue);
     
             // Verifica se a quantidade é maior que zero antes de chamar a API
             if (quantidadeValue > 0) {
                 // Chama a API apenas se a quantidade for maior que zero
                 $.ajax({
-                    url: 'https://localhost:7179/ComprarItem',
-                    type: 'PUT',
+                    url: 'https://localhost:7179/AddPedido',
+                    type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        nome: nome,
-                        tamanho: tamanho,
-                        quantidadeComprada: quantidadeValue
+                        nomeCliente: nomeCliente,
+                        produtoTamanho: tamanho,
+                        produtoNome: nome,
+                        quantidade: quantidadeValue
                     }),
                     success: function (response) {
                         console.log('Compra realizada com sucesso para o item com nome ' + nome + ' e ' +  tamanho);
