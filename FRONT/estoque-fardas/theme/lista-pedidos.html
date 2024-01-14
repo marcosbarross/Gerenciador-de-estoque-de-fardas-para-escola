@@ -24,9 +24,9 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/feather-icon.css">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/animate.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/date-picker.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/datatables.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/owlcarousel.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/rating.css">
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
@@ -35,7 +35,9 @@
     <link id="color" rel="stylesheet" href="../assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   </head>
   <body class="dark-only">
     <!-- loader starts-->
@@ -338,47 +340,49 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h3>Gerenciar produtos</h3>
+                  <h3>Lista de produtos</h3>
                 </div>
                 <div class="col-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
-                    <li class="breadcrumb-item">Tables</li>
-                    <li class="breadcrumb-item active"> JS Grid Tables</li>
+                    <li class="breadcrumb-item">ECommerce</li>
+                    <li class="breadcrumb-item active">Lista de produtos</li>
                   </ol>
                 </div>
               </div>
             </div>
           </div>
+        </style>
           <!-- Container-fluid starts-->
           <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
-                            <div id="basicScenario">
-                                <table id="myTable" class="table">
+                            <div class="table-responsive product-table">
+                                <table class="display" id="itemTable">
                                     <thead>
-                                        <tr>
-                                          <th>Nome</th>
-                                          <th>Tamanho</th>
-                                          <th>Preco</th>
-                                          <th>Estoque</th>
-                                          <th>Ação</th>                                          
+                                        <tr class="item-row">
+                                            <th> pedido</th>
+                                            <th>Cliente</th>
+                                            <th>Produto</th>
+                                            <th>Tamanho</th>
+                                            <th>Quantidade</th>
+                                            <th>Ação</th>                                       
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Table body will be populated dynamically -->
+                                        <!-- Os dados serão populados dfinamicamente aqui -->
                                     </tbody>
-                                </table>
-                            </div>
+                                </table>                     
+                              </div>
+                              <br> <button class="btn btn-success" type="button" data-bs-toggle="tooltip" title="Finalizar" id="finalizarBtn">Finalizar</button>
                         </div>
-                    </div>
+                    </div>                  
                 </div>
-            </div>
+            </div>  
         </div>
-          <!-- Container-fluid Ends-->
-        </div>
+        <!-- Container-fluid Ends-->  
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
@@ -391,6 +395,7 @@
         </footer>
       </div>
     </div>
+    <script src="../Scripts/pedidos.js"></script>
     <!-- latest jquery-->
     <script src="../assets/js/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap js-->
@@ -405,9 +410,12 @@
     <script src="../assets/js/config.js"></script>
     <!-- Plugins JS start-->
     <script src="../assets/js/sidebar-menu.js"></script>
-    <script src="../assets/js/jsgrid/jsgrid.min.js"></script>
-    <script src="../assets/js/jsgrid/griddata.js"></script>
-    <script src="../assets/js/jsgrid/jsgrid.js"></script>
+    <script src="../assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/rating/jquery.barrating.js"></script>
+    <script src="../assets/js/rating/rating-script.js"></script>
+    <script src="../assets/js/owlcarousel/owl.carousel.js"></script>
+    <script src="../assets/js/ecommerce.js"></script>
+    <script src="../assets/js/product-list-custom.js"></script>
     <script src="../assets/js/tooltip-init.js"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
