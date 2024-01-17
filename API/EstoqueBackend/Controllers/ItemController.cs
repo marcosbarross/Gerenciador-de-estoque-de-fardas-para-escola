@@ -106,9 +106,9 @@ namespace EstoqueBackend.Controllers
             }
         }
 
-        [Route("/ListarItens")]
+        [Route("/ListarItensPorNome")]
         [HttpGet]
-        public IActionResult ListarItens()
+        public IActionResult ListarItensPorNome()
         {
             using (var contexto = new EstoqueContext())
             {
@@ -122,6 +122,18 @@ namespace EstoqueBackend.Controllers
                         quantidadeRestante = group.First().QuantidadeRestante,
                     })
                     .ToList();
+
+                return Ok(produtos);
+            }
+        }
+
+        [Route("/ListarTodosItens")]
+        [HttpGet]
+        public IActionResult ListarTodosItens()
+        {
+            using (var contexto = new EstoqueContext())
+            {
+                var produtos = contexto.Produtos.ToList();
 
                 return Ok(produtos);
             }

@@ -66,6 +66,7 @@ namespace EstoqueBackend.Controllers
             }
         }
 
+        // Não está funcionando
         [Route("/EditarPedidos")]
         [HttpPut]
         public IActionResult EditarPedidos([FromBody] PedidoDTO pedidoDTO)
@@ -81,18 +82,16 @@ namespace EstoqueBackend.Controllers
                         return BadRequest("Pedido não encontrado");
                     }
 
-                    var produtoExistente = contexto.Produtos.Find(Util.Util.RetornaIdComNomeTamanho(pedidoDTO, pedidoDTO.produtoNome, pedidoDTO.produtoTamanho));
-
-                    if (produtoExistente == null)
+                    if (pedidoDTO.produtoTamanho != pedidoExistente.produtoTamanho)
                     {
-                        return BadRequest("Produto não encontrado");
+                        pedidoExistente.produtoTamanho = pedidoDTO.produtoTamanho;
                     }
 
-                    ItemController.ComprarItem(produtoExistente.Id, pedidoDTO.Quantidade);
-
-                    pedidoExistente.Quantidade = pedidoDTO.Quantidade;
-                    pedidoExistente.ProdutoId = produtoExistente.Id;
-
+                    if (pedidoDTO.Quantidade != pedidoExistente.Quantidade)
+                    {
+                        pedidoExistente.Quantidade = pedidoDTO.Quantidade;
+                    }
+               
                     contexto.SaveChanges();
 
                     return Ok("Pedido editado com sucesso");
@@ -119,8 +118,11 @@ namespace EstoqueBackend.Controllers
                     {
                         return BadRequest("Pedido não encontrado");
                     }
-                    contexto.Pedidos.Remove(pedidoExistente);
 
+                    var produtoExistente = contexto.Produtos.Find(pedidoExistente.ProdutoId);
+                    produtoExistente.QuantidadeRestante += pedidoExistente.Quantidade;
+                    
+                    contexto.Pedidos.Remove(pedidoExistente);
                     contexto.SaveChanges();
 
                     return Ok("Pedido deletado com sucesso");

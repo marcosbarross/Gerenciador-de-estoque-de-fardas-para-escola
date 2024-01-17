@@ -12,7 +12,6 @@ $(document).ready(function () {
         });
     }
 
-
     function populateTable(data) {
         var tableBody = $('#itemTable tbody');
         tableBody.empty(); // Clear existing rows
@@ -25,41 +24,60 @@ $(document).ready(function () {
                 '<td><input type="text" class="form-control" value="' + item.produtoTamanho + '" ></td>' +
                 '<td><input type="text" class="form-control" value="' + item.quantidade + '" ></td>' +
                 '<td><button class="btn btn-danger btn-remove" data-rowid="' + item.id + '">Remover</button></td>' +
-            '</tr>';
-        
+                '<td><button class="btn btn-success btn-editar" type="button" data-bs-toggle="tooltip" title="Editar" data-id="' + item.id + '">Editar</button></td>' +
+                '</tr>';
+
             tableBody.append(row);
         });
-        
-    $('.btn-remove').click(function () {
-        var rowId = $(this).closest('tr').find('input[type="text"]').first().val();
 
-        $.ajax({
-            url: 'https://localhost:7179/DeletarPedidos',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify({ Id: rowId }),
-            success: function (response) {
-                console.log(response);
-    
-                $(this).closest('tr').remove();
-                location.reload();
-            },
-            error: function (error) {
-                console.error('Error deleting item:', error);
-            }
+        $('.btn-remove').click(function () {
+            var rowId = $(this).closest('tr').find('input[type="text"]').first().val();
+
+            $.ajax({
+                url: 'https://localhost:7179/DeletarPedidos',
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify({ Id: rowId }),
+                success: function (response) {
+                    console.log(response);
+
+                    $(this).closest('tr').remove();
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error deleting item:', error);
+                }
+            });
         });
-    });
-   
+
+        $('.btn-editar').click(function () {
+            var rowId = $(this).data('id');
+            var produtoTamanho = $(this).closest('tr').find('input[type="text"]').eq(3).val();
+            var quantidade = $(this).closest('tr').find('input[type="text"]').eq(4).val();
+
+            console.log('Row ID: ' + rowId);
+            console.log('Produto Tamanho: ' + produtoTamanho);
+            console.log('Quantidade: ' + quantidade);
+
+            $.ajax({
+                url: 'https://localhost:7179/EditarPedidos/',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    Id: rowId,
+                    produtoTamanho: produtoTamanho,
+                    Quantidade: quantidade
+                }),
+                success: function (response) {
+                    console.log(response);
+                    fetchAndPopulateTable();
+                },
+                error: function (error) {
+                    console.error('Error editing item:', error);
+                }
+            });
+        });
     }
 
-
-
-
-    // Call the function to fetch and populate the table on page load
     fetchAndPopulateTable();
-
-    // Optional: Add an event listener to refresh the table when a button is clicked
-    $('#finalizarBtn').click(function () {
-        fetchAndPopulateTable();
-    });
 });

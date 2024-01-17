@@ -91,14 +91,14 @@ $(document).ready(function () {
                     } 
                 });
             } else {
-                console.log('A quantidade para o item com nome ' + nome + ' é zero. A compra não será realizada.');
+                window.alert('A quantidade para o item com nome ' + nome + ' é zero. A compra não será realizada.');
             }
         });
     });
     
 
     $.ajax({
-        url: 'https://localhost:7179/ListarItens',
+        url: 'https://localhost:7179/ListarItensPorNome',
         type: 'GET',
         success: function (data) {
             dataTable.rows.add(data).draw();

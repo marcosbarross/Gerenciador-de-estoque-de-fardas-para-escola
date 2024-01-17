@@ -3,7 +3,7 @@
 var db = {
     loadData: function () {
         // Make a GET request to the API
-        $.get("https://localhost:7179/ListarItens", function (data) {
+        $.get("https://localhost:7179/ListarTodosItens", function (data) {
             // Iterate through the data and populate the table
             $.each(data, function (index, item) {
                 var newRow = "<tr data-index='" + index + "'>" +
